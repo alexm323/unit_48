@@ -544,3 +544,145 @@ false
 
 get this back from testing it which means it is probably working :D 
 
+colt splits it , sorts it, joins it and if they are the same then it is an anagram 
+
+thats a one line solution but the problem is that using sort because it is never good 
+
+the best case we can hope for is N O log n 
+
+we want to consider that we have the same length as well as the same values within the freq objects 
+
+this is a good solution for a Map 
+
+maps are very similar to objects but they are key value pairs but we can use whatever we want as the keys 
+Maps also have sizes 
+
+function createFrequencyCounter(str){
+    let frequencies = new Map();
+
+    for (let val of str){
+        let valCount = frequencies.get(val) || 0;
+        frequencies.set(val,valCount + 1);
+    }
+    return frequencies;
+}
+
+function isValidAnagram(str1,str2){
+    if(str1.length !== str2.length) return false;
+    const charMap1 = createFrequencyCounter(str1);
+    const charMap2 = createFrequencyCounter(str2);
+    console.log(charMap1,charMap2)
+    //we want to iterate over the map and make sure that each value is the same and check if the two maps are the same 
+    if(charMap1.size !== charMap2.size) return false;
+    for(let letter of charMap1.keys()){
+        if(charMap2.get(letter) !== charMap2.get(letter)) return false;
+    }
+    return true;
+}
+
+this is a much cleaner solution because i dont think im solving for this contingency when all the letters are the same 
+
+so we use a frequency counter here to improve the performance 
+
+if we were working with super long strings in an interview 
+
+this solution is O of N 
+
+so this is another example of using frequency counters to improve solutions 
+
+____________________________________________________________
+Multiple pointers sumZero Naieve 
+____________________________________________________________
+
+another pattern that might be useful sometimes 
+
+creating pointers or values that correspond to an index or position and move towards the beginning, end, or middle based on a certain condition 
+
+there are certain scenarios where we might be able to work towards the middle 
+
+most scenarios this will not apply 
+
+write a function called sumZero 
+accepts a sorted array of integers 
+
+what is the first pair of numbers where the sum is zero 
+
+sumZero([-3,-2,-1,0,1,2,3]); // [-3,3]
+
+lets write the naieve approach
+
+function sumZero(nums){
+
+}
+
+[-3,-2,-1,0,1,2,3]
+
+what is the first pair that we can find where the sum is equal to zero 
+
+function sumZero(nums){
+    for(let i=0; i < nums.length; i++){
+        for(let j = i + 1; j < nums.length;j++){
+            if(nums[i] + nums[j] ===0){
+                return [nums[i],nums[j]]
+            }
+        }
+    }
+}
+
+so this works but the solution is awful in terms of Big O time 
+
+this is the naive approach 
+this is roughly n squared Big O notation 
+
+there is at least one optimzation to short circuit things 
+
+what if we had 
+
+[-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+
+well what about if are first element in the array is greater than 0?
+we will never be able to add anything on that side to make it zero 
+
+function sumZero(nums){
+    for(let i=0; i < nums.length; i++){
+        if(nums[i]>0)break;
+        for(let j = i + 1; j < nums.length;j++){
+            console.log(nums[i],nums[j])
+            if(nums[i] + nums[j] ===0){
+                return [nums[i],nums[j]]
+            }
+        }
+    }
+}
+
+if(nums[i]>0)break;
+
+this line will kick us out of the loop because we are checking once we pass zero 
+
+so this is a small optimization 
+
+next though we can see a much more efficient way to handle this 
+
+____________________________________________________________
+Multiple Pointer pattern
+____________________________________________________________
+
+Instead of having a single pointer or variable 
+
+where we have like one home base element and then we move in as we go 
+
+in this exact problem there ios a nice version where we start on both sides
+
+if we dont get 0 
+
+then if we add them and we get a positive number then we know that we have too large of a positive number
+so we move down 
+if we get a negative number than that negative number is too big so we move down one 
+
+this is a much smarter approach to doing the naive approach 
+because of the information being sorted 
+
+there is usually some optimization that we can take advantage of 
+
+look for thew key word sorted 
+
