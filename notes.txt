@@ -1,0 +1,546 @@
+Goals
+____________________________________________________________
+1. Develop problem solving process & learn fundamental patterns
+2. Use frequency counters to solve problems more efficiently
+3. Use multiple pointers to solve problems more efficiently
+4. Compare different runtimes
+____________________________________________________________
+
+Intro to problem solving 
+____________________________________________________________
+
+Problem solving process and patterns 
+
+We want to discuss a general problem solving process 
+
+Want to be able to have some kind of process that we want to be able to follow 
+Learn some fundamental patterns that we can use to light the path to the solution 
+
+want to discuss some common coding patterns 
+
+these are very specific but in situations where they are useful , they will be very useful 
+
+____________________________________________________________
+understand the problem
+____________________________________________________________
+
+lets say in an interview they ask you to solve some algorithm 
+
+youve never seen the problem so how should you approach it? 
+
+sometimes it is similar to something that you've done 
+
+most of the time it is usually not very straightforward 
+
+there are some steps that we rely on to help illuminate the problem more 
+
+The process. 
+1. understand the problem 
+- You cant write a solution if you dont fully understand the problem at hand 
+- can i restate the problem in my own words?(want to make sure you are definitely understanding things)
+- what are the inputs that go into the problem?
+- what are the outputs that should come from the solution to the problem?
+- do i have enough information?
+- how should I label the important pieces of data that are a part of the problem 
+you want to give the intervieweres some insight into your thought process
+much better than being silent the whole time 
+if you dont know where to start and you are panicking , the most usual thing to do is to clam up 
+dont do that 
+if you are not interviewing , the process still applies 
+talking out loud can help anyways 
+come up with names 
+refer to the parts of the problem 
+now we can move on to the second step 
+
+for example write a function that takes two numbers and returns their sum 
+
+write a function that adds two numbers (thats in my words) 
+what are the inputs? 
+what are the outputs?
+can the outputs be determined from the inputs? what happens if someone throws in a string , or an extra number 
+how should i label the important pieces of data? call the function sum and call the inputs num1 and num2 or something along these lines 
+
+____________________________________________________________
+Concrete examples
+____________________________________________________________
+
+this could mean writing things down 
+
+with some input what should i have ?
+
+start with simple examples 
+progress to more complex examples 
+exploire examples with empty inputs 
+explore examples with invalid inputs 
+this is really all tied to understanding the problem as well 
+
+write a function which takes in a string andf returns counts of each character in the string 
+
+
+2. Explore concrete examples 
+    1. start with a simple example 
+charCount('hello') => {'h':1,'e':1,'l':2,'o':1} or should we have an object with all of the letters starting at zero? this is a question we could ask 
+
+    2. progress to more complex examples 
+    charCount('My phone number is (344)-222-3333')
+    3. explore examples with empty inputs
+    -what should be the output?
+    4. explore examples with invalid inputs 
+    - what should be the output and what is considered an invalid input 
+
+____________________________________________________________
+Break it down
+____________________________________________________________
+
+3. break it down 
+we are not writing code just yet 
+
+explicitly write out the steps you need to take 
+you can type this as pseudocode 
+this forces you to think about the code you'll write before you write it 
+this helps you catch any lingering conceptual issues or misunderstandings 
+
+write english/pseudocode so we can describe what we want to do 
+
+what if the interviewer told us we can treat everything as lowercase 
+
+in order to break it down we have our function
+
+function charCount(str){
+    // create empty object to hold charCounts 
+    // loop over each char in string 
+        // If char is letter or number - downcase first 
+            //if char is in object , add 1 to count 
+            //otherwise, add to object and set count to 1 
+    // return object with character counts
+}
+
+____________________________________________________________
+Solve simpler problem
+____________________________________________________________
+
+once we have some down and if we get stuck 
+
+if there is a problem you cant solve then there is an easier problem you CAN solve : find it 
+
+find the core difficulty in what you are trying to do 
+temporaily ignore that difficulty 
+it is perfectly acceptable to say "i know i need to do X but i want to take a look at Y real quick"
+
+then incorporate the difficulty 
+
+in our example a sticky point might be determining if the char is a number or a letter 
+we could isolate that logic and then we can solve that issue first and then we can incorporate it back in 
+
+function charCount(str){
+    // create empty object to hold charCounts 
+    const obj = {};
+    // loop over each char in string 
+    for(let char of str){
+        if(obj[char]){
+            obj[char] +=1;
+        }
+        else{
+            obj[char] = 1;
+        }
+
+    }
+    return obj;
+        // If char is letter or number - downcase first 
+            //if char is in object , add 1 to count 
+            //otherwise, add to object and set count to 1 
+    // return object with character counts
+}
+
+there are some issues with this code though because we are not handling punctuation or numbers, or uppercase letters at this time 
+so we solved a simple problem but we need to solve the harder problem now 
+
+one solution is we could have an array of accepted objects 
+
+we can use a regular expression to take care of this as well 
+
+/[A-Z0-9/i]
+
+this lets us match anything that is a letter or a number regardless of case 
+
+function charCount(str){
+
+    const obj = {};
+    for(let char of str){
+        char = char.toLowerCase();
+        if(/[A-Z0-9]/i.test(char)){
+            if(obj[char]){
+            obj[char] +=1;
+            }
+            else{
+                obj[char] = 1;
+            }
+        }
+        
+
+    }
+    return obj;
+}
+
+so this is something that is useful for us to be able to break down 
+if we get stuck , isolate the thing that is tripping us up 
+try to solve around that and then implementing it back in 
+
+____________________________________________________________
+Use your tools
+____________________________________________________________
+
+5. Use Tools Strategically 
+
+you may not need this unless you are getting stuck 
+things like the debugger 
+
+use tools 
+
+Use your debugging tools
+-stop execution 
+-step through the code 
+useful for algorithms
+-using debuggers is a great way to be able to stop code and see exactly where it is going awry 
+in an interview setting , if something is not going well, show the interviewer that you know how to use the dev tools 
+you know how to find the problem 
+dont guess and check 
+
+scientific approach, forumalte hypotheses , test,draw conclusions.
+repeat 
+
+be precise and be specific 
+dont be afraid to use your tools 
+
+____________________________________________________________
+Refactor for success
+____________________________________________________________
+
+6. Look back and refactor 
+
+Does the result match your expected output?
+Can you verify the result with your expected inputs?
+Does your solution handle them all?
+anticipate the edge cases and the inputs that a user may input 
+
+can you improve the performance of your solution?
+what is the time complexity of your solution ?
+
+you can talk through some of the problematic portions of your code 
+
+even if something is not optimal , 
+it is better to identify when something is not optimal, it is better to demonstrate that you can think critically about your own code 
+
+it is not just time complexity and performance 
+what other ideas could you have pursued?
+usually in an interview this is just the fastest thing you could come up with 
+
+once something is working, you can go back and edit the code so that it is nicer overall 
+
+we can refactor the if else statement in our code like this 
+
+
+function charCount(str){
+
+    const obj = {};
+    for(let char of str){
+        
+        if(/[A-Z0-9]/i.test(char)){
+            char = char.toLowerCase();
+            obj[char] = (obj[char] + 1) || 1;
+        }
+    }
+    return obj;
+}
+
+once you have something that works
+is there a way we can write this completely differently ?
+
+what about using reduce 
+
+we could make a different version of this 
+
+function charCount(str){
+
+    return str.split('').reduce((obj,char) => {
+        if(/[A-Z0-9]/i.test(char)){
+            char = char.toLowerCase();
+            obj[char] = (obj[char] + 1) || 1;
+        }
+        return obj;
+    },{})
+}
+
+so this is a completely different approach 
+is it better?
+not really 
+we have to iterate through every character 
+so we have two iterations 
+
+in the previous one we had only one loop 
+
+but this still works 
+
+the second approach would work great if we received an array as an input 
+
+the third one was kind of out there 
+
+sort() 
+is never very efficient so we try to avoid it 
+
+what are optimizations we could make 
+can we remove nested loops 
+
+this is a great time to talk to the interviewer and ask questions 
+this is how i did it, did you have something else in mind?
+it is good to have a conversation about the code 
+interviews are a weird thing 
+
+closed google 
+in the real world you would just google 
+in an interview setting be curious, get input, ask for an official solution, what is the craziest thing you've seen someone do with this problem 
+
+what is something that caught you completely off guard?
+
+you want to try to get something done and then identify issues, talk about it 
+
+you dont have to follow this formula for every single problem 
+
+the process is useful to have in case that we get stuck
+
+now we are going to see some problems 
+
+____________________________________________________________
+Frequency Counter Squares Naive 
+____________________________________________________________
+common problem solving patterns 
+
+these are actual code based patterns 
+these are not magic bullets 
+this will not help you against EVERY problem 
+but these are sometimes useful 
+
+Frequency counters
+multiple pointers 
+sliding window 
+and on and on and on 
+
+Frequency Counters 
+
+- this pattern uses objects,maps , or sets to collect values/frequencies of values 
+- this can often acoid the need for nested loops or O(n^2) operations 
+
+write a function called squares, which accepts a pair of arrays 
+is there a square of each value in the second array 
+
+there must be the same frequency for this to work 
+so if our left array
+
+1,2,1 we need to have 1,4,1 or some combination of these numbers 
+just having the same frequency is not enough 
+
+A naieve solution 
+without the frequency counter pattern 
+
+would be to write a loop 
+
+function squares(nums1,nums2){
+    if(nums1.length !== nums2.length) return false;
+    for(let i =0;i < nums1.length; i++){
+        const foundIdx = nums2.indexOf(nums1[i] **2);
+        if(foundIdx === -1) return false;
+        nums2.splice(foundIdx,1);
+    }
+    return true;
+}
+
+
+so if this was our inputs we want to check each squared value and remove from the other array if it occurs 
+[1,4,2] [1,4,16]
+
+now we can see another issue 
+
+squares([1,2,1],[1,4,1])
+true
+squares([2,2],[1,4,4])
+true
+
+we have different frequencies 
+
+we need to make sure that the arrays have the same length 
+
+function squares(nums1,nums2){
+    if(nums1.length !== nums2.length) return false;
+    for(let i =0;i < nums1.length; i++){
+        const foundIdx = nums2.indexOf(nums1[i] **2);
+        if(foundIdx === -1) return false;
+        nums2.splice(foundIdx,1);
+    }
+    return true;
+}
+
+
+now that we have that edge case taken care of 
+we can consider the speed of our code 
+
+we have an O(n) operation (the indexOf) within a loop which is O(n) 
+so that is O(n^2) and that is a problem 
+
+next we will see how we can use a frequency counter to improve this solution 
+
+____________________________________________________________
+Squares freq counter 
+____________________________________________________________
+
+in order to improve our implementation of squares 
+
+frequency counters 
+this pattern uses objects maps or sets to collect values/frequencies of values 
+this can often avoid the need for nested loops for O(n^2) operations with arrays/strings 
+
+if we have 
+
+[2,2,4,1] and the other is [4,4,16,1]
+
+if we were to count how many times they occur 
+
+{
+    2:2,
+    4:1,
+    1:1
+}
+
+{
+    4:2,
+    16:1,
+    1:1
+}
+
+first we can check , is there 2 squared as a key in the second object 
+if yes , proceed
+does it appear twice? yes proceed 
+
+if we had a slightly different number 
+and we dont have a match then we return false 
+
+we still have to loop but this is still fine because it is not O(n^2)
+
+function makeFreqCounter(arr){
+    const freqCounter = {};
+    for(let el of arr){
+        freqCounter[el] = (freqCounter[el] + 1) || 1;
+    }
+    return freqCounter;
+}
+
+makeFreqCounter([1,2,2,4,1])
+{1: 2, 2: 2, 4: 1}
+
+
+now we can use this function inside of our refactored version of squares 
+
+function squares(nums1,nums2){
+    if(nums1.length !== nums2.length) return false;
+    const nums1Freq = makeFreqCounter(nums1);
+    const nums2Freq = makeFreqCounter(nums2);
+    console.log(nums1Freq,nums2Freq)
+}
+
+so now we should be getting back a couple of objects based off of the frequency of the numbers that appear 
+
+and we get this back 
+
+squares([1,2,1],[1,4,1])
+{1: 2, 2: 1} {1: 2, 4: 1}
+
+
+now what we want to do is loop over the each key in our first object 
+
+we want to see if 2^2 for example is in our second object 
+
+function squares(nums1,nums2){
+    if(nums1.length !== nums2.length) return false;
+    const nums1Freq = makeFreqCounter(nums1);
+    const nums2Freq = makeFreqCounter(nums2);
+    for(let key in nums1Freq){
+        if(!nums2Freq[key**2]) return false;
+        if(nums1Freq[key] !== nums2Freq[key ** 2]) return false;
+    }
+    return true;
+}
+
+squares([1,2,1,1,3],[1,9,1,4,1])
+true
+
+
+one thing that happens behind the scenes is that our numbers are all string 
+
+we cna get away with this because when we square the number that is a string javascript knows to turn it into a number
+
+there are ways around this by creating a new Map 
+
+so for this implementation of a solution we are getting 3 N instead of N ^ 2 
+
+frequency counter has made this a lot more efficient 
+it is a bit harder to understand but it does perform better 
+
+____________________________________________________________
+Frequency Counter Challenge 
+____________________________________________________________
+
+try and solve this challenge 
+
+validAnagram to see if a string is a valid anagram of another 
+
+cinema is an anagram of iceman 
+
+dont worry about spaces, punctuation 
+just assume every string is a lower case string and it only contains letter , no spaces 
+
+we can use the frequency counter pattern to solve this kind of problem 
+
+function makeFreqCounter(str){
+    let strArr = str.split('')
+    const freqCounter = {};
+    for(let el of strArr){
+        freqCounter[el] = (freqCounter[el] + 1) || 1;
+    }
+    return freqCounter;
+}
+
+so we can reuse this because if we put in an string we should get back an object which counts the characters of the strings 
+
+we just modify it a little bit to get it to accept strings 
+
+function validAnagram(str1,str2){
+    if(str1.length !== str2.length) return false;
+    const str1Freq = makeFreqCounter(str1);   
+    const str2Freq = makeFreqCounter(str2);  
+    for(let key in str1Freq){
+        if(str1Freq[key] !== str2Freq[key]) return false;
+    }
+    return true;
+}
+
+i think i got it working :) 
+
+the secret really is i the freqCounter because it simplifies the task of finding if the letters are all in there 
+
+
+validAnagram('iceman','cinema')
+true
+validAnagram('ocat','taco')
+true
+validAnagram('','')
+true
+validAnagram('aaz','zza')
+false
+validAnagram('anagram','nagaram')
+true
+validAnagram('rat','car')
+false
+validAnagram('awesome','awesom')
+false
+
+get this back from testing it which means it is probably working :D 
+
