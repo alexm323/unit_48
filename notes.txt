@@ -686,3 +686,18 @@ there is usually some optimization that we can take advantage of
 
 look for thew key word sorted 
 
+function sumZeroMultiplePointers(nums){
+    let left = 0;
+    let right = nums.length - 1
+
+    while(left < right){
+        const sum = nums[left] + nums[right];
+        if(sum === 0){
+            return [nums[left],nums[right]]
+        }else if (sum >0){
+            right --;
+        } else{
+            left ++;
+        }
+    }
+}
