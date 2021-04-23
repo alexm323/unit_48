@@ -1,18 +1,40 @@
 // add whatever parameters you deem necessary
-function countPairs(nums,target) {
-    let left = 0;
-    let right = nums.length -1;
-    let pairCounter = 0;
-    while(left < right){
-        console.log(nums[left])
-        const sum = nums[left] + nums[right];
-        if(sum === target){
-            pairCounter++;
+// function countPairs(nums,target) {
+//     let left = 0;
+//     let right = nums.length -1;
+//     let pairCounter = 0;
+//     while(left < right){
+//         console.log(left)
+//         const sum = nums[left] + nums[right];
+//         if(sum === target){
+//             pairCounter++;
+//         }
+//         left++;
+//     }
+//     return pairCounter;
+// }
+
+function countPairs(arr, num) {
+    arr.sort((a, b) => a - b);
+    let count = 0;
+    let start = 0;
+    let end = arr.length - 1;
+    while (start < end) {
+        let sum = arr[start] + arr[end];
+        if (sum === num) {
+            count++;
+            start++;
+            end--;
+        } else if (sum < num) {
+            start++;
+        } else {
+            end--;
         }
-        left++;
     }
-    return pairCounter;
+    return count;
 }
+
+
 //inputs a number array to look through and a target value we want to add up to 
 // outputs: number of pairs that add up to the target value 
 

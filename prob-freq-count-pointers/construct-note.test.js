@@ -1,4 +1,6 @@
-import {constructNote,makeFrequencyCounter} from 'construct-note';
+const {constructNote,makeFrequencyCounter} = require('./construct-note');
+
+
 describe("constructNote", function() {
   it("should return false for empty letters string", function() {
     expect(constructNote("abcd", "")).toBe(false);

@@ -33,4 +33,4 @@ function constructNote(message,letters) {
 
 // what I am envisioning is using the frequency counter method to get an object that has the number of times that each letter appears so we can verify that each of these values
 // is equal to or less than the value for that letter key 
-// module.exports = {constructNote,createFrequencyCounter}
+module.exports = {constructNote,createFrequencyCounter}
