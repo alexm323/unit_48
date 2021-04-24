@@ -1,0 +1,246 @@
+Whiteboarding
+_________________________________________________
+
+this is the polar opposite of what it is like to be a developer 
+
+do it live at a whiteboard 
+no computer usually 
+there are specific skills that are meant to be seen 
+
+how do they handle pressure 
+how do they communicate their thoughts and ideas about code 
+
+how do they explain things 
+do they clam up
+
+they want to assess
+
+your understanding of algos 
+your problem solving techniques 
+how you communicate your thought process
+how you work under pressure 
+
+whiteboarding is the easiest way to assess things from an interviewer perspective 
+
+not that easy from the other side 
+
+not used to handwriting code or talking about code as you go 
+
+basic process, outlining techniques for doing this kind of interview 
+
+_________________________________________________
+listen repeat clarify
+_________________________________________________
+Process:
+
+there are a couple of steps that we should take 
+
+this is more of a recipe for a whiteboarding interview 
+
+overall there is a process 
+
+Listen Carefully 
+sometimes your brain sucks in high pressure situationhs 
+
+Repeat it Back 
+make sure you understand the question 
+always repeat it back to make sure you are on the same page 
+
+Ask Clarifying Questions 
+There is only so much information that a prompt can give you 
+
+Do i need to handle other kinds of things in lis takeif a string were in the list?
+will these all be integers
+do i just skip over odd numbers
+by average do you mean the mean median mode?
+do i print the result or return it?
+
+Why do we ask clarifying questions?
+to buy more time 
+to understand the challenge detailos 
+so you write bug-free code 
+
+these interviews are usually timeboxed 
+a whiteboarding challenge is more about how you work as a developer with other people 
+buying time is not a bad thing 
+
+a lot of these problems are too difficult to implement in 15 minutes 
+the priority is to demonstrate, im someone you want to hire because I am not going to panic , i can walk through a problem , and I know some code 
+you want to understand the challenge details 
+demonstrate that you care about details 
+
+writing bug free code is hard on a white board 
+missing brace, or misremembering a method name etc 
+
+Listen
+Repeat 
+Ask Clarifying Questions 
+
+_________________________________________________
+Write requirements and pseudocode 
+_________________________________________________
+
+Write down the requirements
+depending on the dependency of the problem 
+some of the questions , even if they are not very hard, the reqs can be tricky 
+
+make a short bulleted list of reqs on whiteboard 
+so you cant forget abny details 
+gives you a moment to think with less pressure 
+
+for example:
+-function given integers
+-just skip odd numbers 
+-get mean of even numbers 
+-return mean 
+
+write down test cases 
+
+input => output you are expecting 
+
+Stop and Think 
+Dont just start writing code 
+
+always helpful to externally talk about the plan
+
+"ill loop over the list, skip the odd, ill keep the sum of the evens and the number of them"
+once I finish looping i can divide the sum by the count 
+
+there are a lot of different styles of interviewers , some like to talk the whole time and be a partner 
+rather than someone who is observing you like a rat in a maze 
+
+even if we get interviewers like that , try to talk about what the plan is 
+
+Pseudo-code
+write down the gneral plan 
+this can help keep you on track 
+
+for number in list
+    if not even, skip 
+    add number to sum 
+    increase count by 1
+return sum divided by count 
+
+a lot of times you might be able to get by with pseudo code 
+and not the actual code implementation 
+
+_________________________________________________
+Write and Test Code 
+_________________________________________________
+
+if you need to start writing code 
+
+start at the top left of the board 
+write neatly and evenly 
+in python can help to show indentation with lines 
+
+logic is the easier thing to screw up
+you run it you test it 
+usually doesnt work on the first try 
+
+test your code 
+go slowly , be the computer 
+draw a little table and show whatis happening at each step 
+
+keep track of the important variables 
+drawing out a chart can be helpful to track these things 
+
+good demo of your debugging skill if you are able to walk through your code and highlight the issues you might hit 
+
+_________________________________________________
+things to keep in mind 
+_________________________________________________
+whiteboarding is a new skill
+
+does not coordinate with day to day life as a developer 
+it is a real thing that we will encounter as devs 
+the first few times your brain will fall out 
+even people cool as a clam 
+
+find lists of common whiteboard questions 
+
+partial credit 
+these are not pass fail 
+do what you can 
+even if its only pseudocode 
+even if its a simpler case 
+even if its just 1 part of the problem 
+
+they want to see how you think 
+how you handle pressure 
+you want it to go well
+
+sometimes you get a problem that not a lot of people will solve 
+sometimes the questions are really hard 
+they typically dont want you to solve it with a built in function 
+for find max number you cant use math.max() 
+
+dont go radio silent 
+dont need to keep a running commentary but dont spend more than 20 seconds without talking 
+let them know where you are in the problem 
+
+helpls keep you organized
+helps them see where you are 
+
+its better to externalize all the things 
+display you know where the problems are 
+demonstrate that you know what you are doing 
+
+_________________________________________________
+tips
+_________________________________________________
+hints 
+
+its fine to ask for a hint 
+youll be in there with 1 or 2 people 
+they may offer a hint 
+
+sometimes all it takes a tiny hint 
+some questions are designed so thats expected 
+if you know part of the answer say that before asking for help 
+
+like if you think it might need to be called recursively or something 
+
+Good variable names 
+
+for indexes of list i,j,k 
+for items ina  list a,b,c 
+mnemonics 
+
+test, dont hand wave 
+
+some parts are hairy and feel shaky, dont wave past the harder sections 
+
+its not an API quiz 
+
+try to remember the very most common operations 
+to add to an array its myArray,push()
+whiteboarding isnt a pop quiz
+
+its fine to ask what the method is called 
+its ok to use  best-guess name (mySet.additem()) just get close enough and have the intent be clear 
+
+take your time 
+interviewers will not be checking watches 
+they want you to think deeply 
+donjt let nerves speed up your speech 
+
+you dont want to look like a frantic ball of nerves 
+
+remember 
+you have a useful new skill 
+theyre hungry for people they can hire - they want you to succeed 
+
+if they have a valuable dev theywant to hire you , they want you to do well 
+sometimes you will struggle but that is not the goal 
+
+try to think of the interviewers as a pair programming partner not a test proctor 
+you are there to collaborate with someone 
+
+they are testing your ability to test code 
+to be a person ina  room with another person 
+
+at the end of the day , dont feel bad about not knowing something 
+everyone has a bad interview now and then 
+learn and get better 
+

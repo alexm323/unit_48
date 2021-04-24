@@ -1,0 +1,526 @@
+JS The Tricky Parts
+_______________________________________________
+Goals
+Introduce and review some of the trickier Parts
+prep for interviews 
+_______________________________________________
+JS Must knows
+_______________________________________________
+array,string,object,number 
+type checking / conversion 
+JS operators == vs === etc. 
+
+Async Code 
+-Callbacks/promises, async and await 
+why do we use these in javascript and not in python 
+AJAX 
+XHR/Fetch (remember we had to make the http object then check the ready state)
+fetch is a big improvement over XHR but a lot of people still prefer axios 
+why use a library vs just using the native fetch 
+make sure we understand what async await actually does 
+why did promises become a thing 
+why do we need callbacks or any of these strategies in the first place 
+
+next we are going to focus on some of the trickier stuff 
+
+_______________________________________________
+Closures and IIFEs 
+_______________________________________________
+Closures and Immediately Invoked Function Expressions 
+
+Closures recap
+-the ability for inner functions to remember vairables defined in outer functions , long after the outer function has returned 
+-useful for encapsulating logic and create private-ish vairables
+
+function idGenerator(){
+    let start = 0;
+    return function generate() {
+        start ++;
+        return start;
+    }
+}
+
+if we execute idGenerator we end up with a return value of a function 
+the generate function
+
+lets save that to a variable 
+
+const getNextId = idGenerator()
+
+getNextId() // we get 1 
+
+then we can call getNextId again and then we get 2 and so on and so forth 
+
+we cant look at the start variable 
+but it persists outside of where it was defined 
+
+let start = 0;
+function generate(){
+    start++;
+    return start;
+
+}
+
+we get a similar result except we have access to start and we can change the values 
+
+there is a concept called private variables in other languages 
+but here we are kind of mimicking it 
+
+so closure lets us use private variables 
+so we dont have access to start and we can only change it by invoking the function 
+
+
+IIFE
+
+a function expression 
+
+const getRectArea = function(width,height){
+    return width*height;
+}
+
+this versus a function declaration 
+
+an IIFE is just a function expression that is invoked immediately 
+
+function(){
+    console.log('just ran!);
+}
+
+if we define some function where we just run it 
+
+how do we execute it ? 
+we could store it in a variable but thats not the point 
+
+we could add parentheses at the end to execute 
+
+function(){
+    console.log('just ran!);
+}();
+
+like closures it has to do with scoping things 
+
+useful for scoping something right away and protecting the global namespace 
+
+it is this extra layer of abstraction 
+you are kind of encapsulating your code 
+
+const $ = (function() {
+    const version = '3.14';
+    return {
+        displayVersion(){
+            return versionl
+        },
+        html(element){
+            return document.querySelector(element).innerHTML;
+        }
+    }
+})();
+
+if we look at dollar sign we get an object back 
+
+$.displayVersion // we get back 3.14 
+
+but we do not have access to version outside of this scope 
+the other way of doing this is to not have the IIFE 
+
+we would just return an object for dollar sign 
+functionally this would work the same way 
+but we have access to it 
+
+a lot of libraries, will wrap things up in IIFE and return some value from there with a bunch of methods
+
+and those methods have access to the variables in their scope but we wouldnt have access to the variables 
+
+this is a common pattern used to encapsulate logic and mimic private variables 
+
+_______________________________________________
+prototypes and constructors 
+_______________________________________________
+
+JS OO Under the hood 
+
+we have some different keywords to discuss
+
+-new
+-prototypes 
+-constructor
+-Object.getPrototypeOf
+
+lets start with 
+new 
+
+we use the new keyword 
+if we have some class defined 
+
+class Blah {
+
+}
+
+the new keyword is not particularly associated with classes 
+
+new operator 
+
+it lets us create an instance from some pattern or some type 
+
+we can do new Array although we could just make it too 
+
+new does the following :
+1. Creates an empty object
+2. Sets the keyword this to be that object 
+3. Returns the object - return this 
+4. Creates a link to the objects prototype 
+
+Creates a Link?
+Every function we make in javascript is an object 
+
+function bark(){
+    return "Woof! Woof!"
+
+}
+
+we can look at console.dir(bark)
+
+it shows us the underlying object 
+thereis a length 
+arguments 
+prototype 
+is a weird object and it has constructor in there 
+
+every function is an object and has an object in it called prototype 
+
+bark.prototype 
+
+in that object it has a property called constructor
+and it points back to the bark function itself 
+
+we can get this weird loop thing where it points to itself 
+in the prototype object the constructor is going to point to the same function by default 
+
+it is very bizarre compared to any other language 
+
+_______________________________________________
+
+More about the new keyword 
+_______________________________________________
+When we define a function , whatever it does , it gets a prop called prototype on that object 
+
+usually we dont care about constructor or prototype 
+usually we start to worry about constructors and prototypes when we are worried about a different called a function 
+
+which is when we are trying to create a new type of model 
+
+function Car(make,model,year){
+    this.make
+    this.model etc etc 
+}
+
+function Dog(name,breed,age){
+    this.name = name;
+    this.breed = breed;
+    this.age = age;
+}
+
+if we execute this function
+
+Dog() 
+
+nothing really happens
+
+Dog('coco','lab',9)
+//undefined 
+
+if we call this function as a normal function it gets put onto the window object 
+
+but remember if we use the new keyword 
+
+const ringo = new Dog('ringo','corgi',8)
+
+this is going to link it to the Dog objects prototype 
+
+this link can be seen in 
+
+Object.getPrototypeOf(ringo)
+>{constructor}
+
+Dog.prototype === Object.getPrototypeOf(ringo) //true 
+
+it makes a new empty object 
+then it connects the prototype and set a reference on our new instance 
+and it sets up that link 
+
+so here ringo has that internal prototype that points to this 
+
+the third step
+
+passes the newly created empty object as what 'this' is referring to 
+Returns 'this' if the function does not return its own object 
+
+__proto__ is where the internal prototype is 
+
+these are the 4 core steps that the new operator does every time we call it 
+
+
+_______________________________________________
+Methods on the prototype 
+_______________________________________________
+lets add in a method to our dog object 
+
+function Dog(name,breed,age){
+    this.name = name;
+    this.breed = breed;
+    this.age = age;
+    this.bark = function(){
+        return `${this.name} says Woof Woof!`
+    }
+}
+
+this is working BUT 
+this is not a great way of implementing the bark method 
+
+every single instance of this Dog object will have its own function definition for bark 
+we can make it so we only have to define it one time 
+
+we can define bark on the prototype of the Dog function 
+
+Dog.prototype.howl = function(){
+    return `${this.name} says Awoooooo!`
+}
+
+> const harry = new Dog('Harry','dog',1)
+undefined
+> harry
+Dog {
+  name: 'Harry',
+  breed: 'dog',
+  age: 1,
+  bark: [Function (anonymous)]
+}
+> harry.howl()
+'Harry says Awoooooo!'
+> 
+
+so we create an object and although it doesnt look like its in the dog object we still have access to it, its just a bit higher up 
+
+we can still call it but it does not exist on the harry object itself
+
+> john
+Dog {
+  name: 'john',
+  breed: 'blue pit',
+  age: 2,
+  bark: [Function (anonymous)]
+}
+> john.howl()
+'john says Awoooooo!'
+> john.howl === harry.howl
+true
+
+we create another one but we can see that the howl function is referencing the same method for both from the prototype 
+
+the normal way we define a method in a class is just syntactic sugar 
+
+takeaway 
+in general we want to define methods on the prototype object 
+
+_______________________________________________
+Prototype Chain
+_______________________________________________
+
+the purpose of the Prototype 
+
+we will be thankful for the Class keyword 
+especially when it came to inheritance 
+
+The prototype object is very special 
+
+JS uses this object to find methods and properties on everything in JS 
+If a property can not be found , JS works its way up the prototype chain looking for it 
+
+if we look at array on the docs 
+
+everything starts with 
+Array.prototype
+
+if we look at an arr object 
+we can see that on the __proto__ 
+we can find the array methods like push pop etc 
+
+how prototypes work in inheritance 
+like when we set up our own objects and functions 
+
+lets say we wanted a base Animal object 
+
+super('')
+this.name = name;
+
+function Animal(species){
+    this.species = species;
+    this.isAlive = true;
+}
+
+Animal.prototype.die = function (){
+    if(this.isAlive){
+        this.isAlive = false;
+        return `The ${this.species} jas died :(`
+    }
+    return `can't die twice dummy`
+}
+
+so now we want to share the functionality 
+so that everytime we make a new Dog we inherit the die method 
+
+so we want the Dog to extend the animal object 
+
+
+we are going to use a method called 
+Object.create() 
+
+const person = {name:'Thomas',age:55}
+
+const x = Object.create(person)
+
+> const person = {name:'Thomas',age:55}
+undefined
+> 
+> const x = Object.create(person)
+undefined
+> x.__proto__
+{ name: 'Thomas', age: 55 }
+> x.age
+55
+
+we will use Object.create 
+
+we are going to set 
+
+Dog.prototype = Object.create(Animal.prototype)
+
+we are saying make the dog prototype a new object that is Animal.prototype 
+
+> Dog.prototype = Object.create(Animal.prototype)
+Animal {}
+> Dog.prototype
+Animal {}
+> Dog.prototype.__proto__
+{ die: [Function (anonymous)] }
+
+_______________________________________________
+Inheritance Behind the scenes 
+_______________________________________________
+
+We have almost made it so that we are almost getting the functions from animal 
+
+function Animal(species){
+    this.species = species;
+    this.isAlive = true;
+
+}
+
+Animal.prototype.die = function(){
+    console.log(this.species.toUpperCase())
+    if(this.isAlive){
+        this.isAlive = false;
+        return `The ${this.species} has died :(`
+    }
+    return `Can't die twice dummy!`
+}
+function Dog(name,breed,age){
+    this.name = name;
+    this.breed = breed;
+    this.age = age;
+    this.bark = function(){
+        return `${this.name} says WOOF WOOF!!!`
+    }
+}
+Dog.prototype = Object.create(Animal.prototype)
+
+we are never running the instance of Animal so we are not actually creating a this.species to refer to 
+
+we can't just call new Animal within the Dog function 
+
+it makes an empty animal object that we are never accessing if we do that 
+
+we want to have the same this from Dog in animal 
+
+we want to use Function.prototype.call() 
+we use call to set the value of this 
+
+so we are going to add in this line 
+
+function Dog(name,breed,age){
+    Animal.call(this,'dog')
+    this.name = name;
+    this.breed = breed;
+    this.age = age;
+    this.bark = function(){
+        return `${this.name} says WOOF WOOF!!!`
+    }
+}
+
+Animal.call(this,'dog')
+
+so it sets this to be dog 
+
+and we can finally call ringo.die() 
+
+this is kind of a pain to set up 
+this is a lot 
+and it does not make a lot of sense especialy to beginners 
+
+we are calling new Dog 
+pass in some values 
+when we use new 
+an empty object is made 
+the prototype is set to a dog protottype 
+so we are not setting each dog to have the prototype of animal 
+but each dog should have a Dog prototype 
+then that object is passed as the value of this in our dog function 
+and we use call 
+and we pass in what this is referring to 
+and then we have access to the properties 
+
+then it is returned from that function 
+so this makes us the dog object 
+and that dog has the howl method which they all share 
+and then that prototype has access to the die method that we made 
+
+this is what we used to have to do if we wanted to share functioality 
+
+ES2015 does all of this under the hood 
+make sure youre able to explain what a prototype is 
+
+functions like call and bind 
+
+a lot of the time it is abstracted away 
+we want to be able to implement inheritance without classes 
+
+Be thankful for classes 
+_______________________________________________
+Semicolons!
+_______________________________________________
+trivia time 
+
+if you dont add a semi colon JS will automaticall insert one 
+
+you should always add semi colons 
+
+The rules:
+1. when the nect line starts with code that breaks the current one (code can spawn on multiple lines)
+2. when the next line starts with a }, closing the current block 
+3. when the end of the source code file is reached 
+4. when there is a return statement on its own line
+5. when there is a break statement on its own line 
+6. when there is a throw statement on its own line 
+7. when there is a continue statement on its own line 
+
+_______________________________________________
+JS trivia
+_______________________________________________
+
+we have emerged into the sunlight 
+small trivia on things we should be able to talk about 
+
+var/let/const 
+scoped differently which ones can you initialize without delcaring 
+
+new keyword 
